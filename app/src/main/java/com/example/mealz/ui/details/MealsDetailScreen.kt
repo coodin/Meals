@@ -20,9 +20,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.*
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
@@ -30,10 +29,9 @@ import com.example.model.response.MealResponse
 import java.lang.Float.min
 
 
-
 @RequiresApi(Build.VERSION_CODES.N)
 @Composable
-fun MealDetailsScreen(viewModel:MealsDetailsViewModel = viewModel()) {
+fun MealDetailsScreen(viewModel: MealsDetailsViewModel = viewModel()) {
     val meal = viewModel.mealState
 //    var profilePictureState by remember {
 //        mutableStateOf(MealProfilePictureState.Normal)
@@ -83,10 +81,18 @@ fun MealDetailsScreen(viewModel:MealsDetailsViewModel = viewModel()) {
                     )
                 }
             }
-            val dummyContentList = (0..100).map { it.toString() }
-            LazyColumn(state =scrollState, modifier = Modifier.fillMaxWidth()) {
+            val dummyContentList = (0..10).map { it.toString() }
+            LazyColumn(state = scrollState, modifier = Modifier.fillMaxWidth()) {
                 items(dummyContentList) { dummyItem ->
-                    Text(text = dummyItem, modifier = Modifier.padding(24.dp))
+                    meal?.description?.let {
+                        Text(
+                            text = it, modifier = Modifier
+                                .padding(start = 16.dp,top = 16.dp, end = 16.dp),
+                            textAlign = TextAlign.Justify,
+                            lineHeight = 25.sp,
+                            style = MaterialTheme.typography.body1
+                        )
+                    }
                 }
             }
         }
